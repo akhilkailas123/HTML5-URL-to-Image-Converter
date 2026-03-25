@@ -1,0 +1,151 @@
+import React, { useState } from 'react';
+import { Button, Input } from './ui';
+import { Search } from 'lucide-react';
+
+interface ConfigFormProps {
+  onSave: (config: any) => void;
+  onCancel: () => void;
+  initialData?: any;
+}
+
+export const ConfigForm: React.FC<ConfigFormProps> = ({ onSave, onCancel, initialData }) => {
+  const [formData, setFormData] = useState(initialData || {
+    accountId: '',
+    deviceEduid: '',
+    contentUrl: '',
+    displayGroupId: '',
+    syncInterval: '5m',
+    imageFormat: 'PNG',
+    resolution: '1080p',
+  });
+
+  const [details, setDetails] = useState<any>(null);
+  const [isFetching, setIsFetching] = useState(false);
+
+  const handleFetchDetails = () => {
+    setIsFetching(true);
+    // Simulate API fetch
+    setTimeout(() => {
+      setDetails({
+        accountName: 'Spectrio Corporate',
+        deviceName: 'Lobby Display 01',
+        displayGroupName: 'Main Entrance',
+        macAddress: '00:1A:2B:3C:4D:5E',
+      });
+      setIsFetching(false);
+    }, 1000);
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="grid grid-cols-2 gap-4">
+        <Input 
+          label="Account ID" 
+          placeholder="e.g. ACC-123" 
+          value={formData.accountId}
+          onChange={(e) => setFormData({ ...formData, accountId: e.target.value })}
+        />
+        <Input 
+          label="Device EDUID" 
+          placeholder="e.g. EDU-456" 
+          value={formData.deviceEduid}
+          onChange={(e) => setFormData({ ...formData, deviceEduid: e.target.value })}
+        />
+        <Input 
+          label="Content URL" 
+          placeholder="https://menu.spectrio.com/..." 
+          className="col-span-2"
+          value={formData.contentUrl}
+          onChange={(e) => setFormData({ ...formData, contentUrl: e.target.value })}
+        />
+        <Input 
+          label="Display Group ID" 
+          placeholder="e.g. DG-789" 
+          value={formData.displayGroupId}
+          onChange={(e) => setFormData({ ...formData, displayGroupId: e.target.value })}
+        />
+        <div className="flex items-end">
+          <Button 
+            variant="outline" 
+            className="w-full flex items-center gap-2" 
+            onClick={handleFetchDetails}
+            disabled={!formData.accountId || !formData.deviceEduid || isFetching}
+          >
+            {isFetching ? 'Fetching...' : <><Search size={18} /> Fetch Details</>}
+          </Button>
+        </div>
+      </div>
+
+      {details && (
+        <div className="p-4 bg-gray-50 rounded-lg border border-gray-200 animate-in slide-in-from-top-2 duration-300">
+          <h4 className="text-sm font-semibold text-gray-700 mb-3 border-b border-gray-200 pb-2">Fetched Metadata</h4>
+          <div className="grid grid-cols-2 gap-y-3 gap-x-4">
+            <div>
+              <p className="text-xs text-gray-500 uppercase tracking-wider font-semibold">Account Name</p>
+              <p className="text-sm text-gray-900">{details.accountName}</p>
+            </div>
+            <div>
+              <p className="text-xs text-gray-500 uppercase tracking-wider font-semibold">Device Name</p>
+              <p className="text-sm text-gray-900">{details.deviceName}</p>
+            </div>
+            <div>
+              <p className="text-xs text-gray-500 uppercase tracking-wider font-semibold">Display Group</p>
+              <p className="text-sm text-gray-900">{details.displayGroupName}</p>
+            </div>
+            <div>
+              <p className="text-xs text-gray-500 uppercase tracking-wider font-semibold">MAC Address</p>
+              <p className="text-sm font-mono text-gray-900">{details.macAddress}</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="space-y-4 pt-4 border-t border-gray-100">
+        <h4 className="text-sm font-semibold text-gray-700">Additional Settings</h4>
+        <div className="grid grid-cols-3 gap-4">
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium text-gray-700">Sync Interval</label>
+            <select 
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none focus:ring-brand focus:border-brand"
+              value={formData.syncInterval}
+              onChange={(e) => setFormData({ ...formData, syncInterval: e.target.value })}
+            >
+              <option value="30s">30 Seconds</option>
+              <option value="1m">1 Minute</option>
+              <option value="5m">5 Minutes</option>
+              <option value="15m">15 Minutes</option>
+              <option value="custom">Custom</option>
+            </select>
+          </div>
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium text-gray-700">Image Format</label>
+            <select 
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none focus:ring-brand focus:border-brand"
+              value={formData.imageFormat}
+              onChange={(e) => setFormData({ ...formData, imageFormat: e.target.value })}
+            >
+              <option>PNG</option>
+              <option>JPG</option>
+            </select>
+          </div>
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium text-gray-700">Resolution</label>
+            <select 
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none focus:ring-brand focus:border-brand"
+              value={formData.resolution}
+              onChange={(e) => setFormData({ ...formData, resolution: e.target.value })}
+            >
+              <option>1080p</option>
+              <option>4K</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex justify-end gap-3 mt-8">
+        <Button variant="outline" onClick={onCancel}>Cancel</Button>
+        <Button onClick={() => onSave({ ...formData, ...details })}>Save Configuration</Button>
+      </div>
+    </div>
+  );
+};

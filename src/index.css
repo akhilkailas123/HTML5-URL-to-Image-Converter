@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-50: #f9f5ff;
+  --color-brand-100: #f4ebff;
+  --color-brand-200: #e9d7fe;
+  --color-brand-300: #d6bbfb;
+  --color-brand-400: #b692f6;
+  --color-brand-500: #9e77ed;
+  --color-brand-600: #7f56d9;
+  --color-brand-700: #6941c6;
+  --color-brand-800: #53389e;
+  --color-brand-900: #44218d;
+  --color-brand: var(--color-brand-900);
+
+  --color-teal-50: #f0fefe;
+  --color-teal-100: #e0fefd;
+  --color-teal-200: #c1fefb;
+  --color-teal-300: #90fcf9;
+  --color-teal-400: #5af8f4;
+  --color-teal-500: #2eece8;
+  --color-teal-600: #15d2cf;
+  --color-teal-700: #0da7a5;
+  --color-teal-800: #097e7c;
+  --color-teal-900: #055454;
+  --color-teal: var(--color-teal-300);
+
+  --color-success-50: #f6fef9;
+  --color-success-100: #ecfdf3;
+  --color-success-200: #d1fadf;
+  --color-success-300: #a6f4c5;
+  --color-success-400: #6ce9a6;
+  --color-success-500: #32d583;
+  --color-success-600: #12b76a;
+  --color-success-700: #027a48;
+  --color-success-800: #05603a;
+  --color-success-900: #054f31;
+
+  --color-error-50: #fffbfa;
+  --color-error-100: #fef3f2;
+  --color-error-200: #fee4e2;
+  --color-error-300: #fecdca;
+  --color-error-400: #fda29b;
+  --color-error-500: #f97066;
+  --color-error-600: #f04438;
+  --color-error-700: #d92d20;
+  --color-error-800: #b42318;
+  --color-error-900: #912018;
+
+  --color-warning-50: #fffcf5;
+  --color-warning-100: #fffafb;
+  --color-warning-200: #fef0c7;
+  --color-warning-300: #fedf89;
+  --color-warning-400: #fec84b;
+  --color-warning-500: #fdb022;
+  --color-warning-600: #f79009;
+  --color-warning-700: #dc6803;
+  --color-warning-800: #b54708;
+  --color-warning-900: #93370d;
+}
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light dark;
+  color: #101828;
+  background-color: #fcfcfd;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+#root {
+  width: 100%;
+}
