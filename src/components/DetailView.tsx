@@ -165,7 +165,9 @@ export const DetailView: React.FC<DetailViewProps> = ({
               // Backend returns absolute file paths; convert to a usable URL
               // Assumes backend serves /screenshots statically at http://127.0.0.1:3000/screenshots/
               const fileName = filePath.replace(/\\/g, '/').split('/').pop();
-              const imgUrl = `http://127.0.0.1:3000/screenshots/${fileName}`;
+              // const imgUrl = `http://127.0.0.1:3000/screenshots/${fileName}`;
+              const imgUrl = `http://127.0.0.1:8000/${fileName}`;
+
 
               return (
                 <div

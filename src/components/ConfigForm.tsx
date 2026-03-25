@@ -4,12 +4,24 @@ import { Search } from 'lucide-react';
 import { api } from '../api';
 import type { CreateDevicePayload, Device } from '../api';
 
-// Hardcoded metadata since there's no fetch-details API
-const HARDCODED_DETAILS = {
-  accountName: 'Spectrio Corporate',
-  deviceName: 'Lobby Display 01',
-  displayGroup: 'Main Entrance',
-  macAddress: '00:1A:2B:3C:4D:5E',
+const HARDCODED_DETAILS: Record<string, {
+  accountName: string;
+  deviceName: string;
+  displayGroup: string;
+  macAddress: string;
+}> = {
+  'a1-edu1': {
+    accountName: 'test user',
+    deviceName: 'hall',
+    displayGroup: 'company',
+    macAddress: '00:1A:2B:3C:4D:5E',
+  },
+  'a2-edu2': {
+    accountName: 'user2',
+    deviceName: 'monitor1',
+    displayGroup: 'combain',
+    macAddress: '00:2A:2B:2C:4D:5E',
+  },
 };
 
 interface ConfigFormProps {
@@ -34,7 +46,7 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({ onSave, onCancel, initia
     resolution: '1080p' as '1080p' | '4k',
   });
 
-  const [details, setDetails] = useState<typeof HARDCODED_DETAILS | null>(null);
+  const [details, setDetails] = useState<any>(null);
   const [isFetching, setIsFetching] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
@@ -55,7 +67,6 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({ onSave, onCancel, initia
         imageFormat: initialData.imageFormat,
         resolution: initialData.resolution,
       });
-      // Pre-fill the fetched details panel from existing data
       setDetails({
         accountName: initialData.accountName,
         deviceName: initialData.deviceName,
@@ -67,16 +78,26 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({ onSave, onCancel, initia
 
   const handleFetchDetails = () => {
     setIsFetching(true);
-    // Simulate a fetch delay; uses hardcoded data since no lookup API exists
+
     setTimeout(() => {
-      setDetails(HARDCODED_DETAILS);
+      const key = `${formData.accountId}-${formData.deviceEDUID}`;
+      const result = HARDCODED_DETAILS[key];
+
+      if (!result) {
+        setDetails(null);
+        setIsFetching(false);
+        return;
+      }
+
+      setDetails(result);
       setFormData(prev => ({
         ...prev,
-        accountName: HARDCODED_DETAILS.accountName,
-        deviceName: HARDCODED_DETAILS.deviceName,
-        displayGroup: HARDCODED_DETAILS.displayGroup,
-        macAddress: HARDCODED_DETAILS.macAddress,
+        accountName: result.accountName,
+        deviceName: result.deviceName,
+        displayGroup: result.displayGroup,
+        macAddress: result.macAddress,
       }));
+
       setIsFetching(false);
     }, 800);
   };
@@ -86,7 +107,6 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({ onSave, onCancel, initia
     setIsSaving(true);
     try {
       if (isEdit && initialData) {
-        // PATCH — only send mutable fields
         const patch = {
           deviceEDUID: formData.deviceEDUID,
           contentUrl: formData.contentUrl,
@@ -102,16 +122,15 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({ onSave, onCancel, initia
         const updated = await api.updateDevice(initialData.accountId, patch);
         onSave(updated);
       } else {
-        // POST — send full payload
         const payload: CreateDevicePayload = {
           accountId: formData.accountId,
           deviceEDUID: formData.deviceEDUID,
           contentUrl: formData.contentUrl,
           displayGroupId: formData.displayGroupId,
-          accountName: formData.accountName || HARDCODED_DETAILS.accountName,
-          deviceName: formData.deviceName || HARDCODED_DETAILS.deviceName,
-          displayGroup: formData.displayGroup || HARDCODED_DETAILS.displayGroup,
-          macAddress: formData.macAddress || HARDCODED_DETAILS.macAddress,
+          accountName: formData.accountName || '',
+          deviceName: formData.deviceName || '',
+          displayGroup: formData.displayGroup || '',
+          macAddress: formData.macAddress || '',
           syncInterval: formData.syncInterval,
           imageFormat: formData.imageFormat,
           resolution: formData.resolution,
