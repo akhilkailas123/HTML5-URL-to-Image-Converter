@@ -10,17 +10,65 @@ const HARDCODED_DETAILS: Record<string, {
   displayGroup: string;
   macAddress: string;
 }> = {
-  'a1-edu1': {
-    accountName: 'test user',
-    deviceName: 'hall',
-    displayGroup: 'company',
-    macAddress: '00:1A:2B:3C:4D:5E',
+  'b1-xyz1': {
+    accountName: 'oliver smith',
+    deviceName: 'reception',
+    displayGroup: 'administration',
+    macAddress: '00:1B:3C:4D:5E:6F',
   },
-  'a2-edu2': {
-    accountName: 'user2',
-    deviceName: 'monitor1',
-    displayGroup: 'combain',
-    macAddress: '00:2A:2B:2C:4D:5E',
+  'b2-xyz2': {
+    accountName: 'emma jones',
+    deviceName: 'conference-room-1',
+    displayGroup: 'hr',
+    macAddress: '00:2B:3D:4E:5F:70',
+  },
+  'b3-xyz3': {
+    accountName: 'liam brown',
+    deviceName: 'main-office',
+    displayGroup: 'finance',
+    macAddress: '00:3B:4C:5D:6E:71',
+  },
+  'b4-xyz4': {
+    accountName: 'ava wilson',
+    deviceName: 'break-room',
+    displayGroup: 'marketing',
+    macAddress: '00:4B:5D:6E:7F:72',
+  },
+  'b5-xyz5': {
+    accountName: 'noah taylor',
+    deviceName: 'server-hub',
+    displayGroup: 'it',
+    macAddress: '00:5B:6E:7F:80:73',
+  },
+  'b6-xyz6': {
+    accountName: 'sophia davis',
+    deviceName: 'lab-2',
+    displayGroup: 'research',
+    macAddress: '00:6B:7F:80:81:74',
+  },
+  'b7-xyz7': {
+    accountName: 'mason miller',
+    deviceName: 'library',
+    displayGroup: 'education',
+    macAddress: '00:7B:80:81:82:75',
+  },
+  'b8-xyz8': {
+    accountName: 'isabella anderson',
+    deviceName: 'cafeteria',
+    displayGroup: 'hospitality',
+    macAddress: '00:8B:81:82:83:76',
+  },
+  'b9-xyz9': {
+    accountName: 'ethan thomas',
+    deviceName: 'workshop-1',
+    displayGroup: 'engineering',
+    macAddress: '00:9B:82:83:84:77',
+  },
+  'b10-xyz10': {
+    accountName: 'mia jackson',
+    deviceName: 'gymnasium',
+    displayGroup: 'wellness',
+    macAddress: '00:AB:83:84:85:78',
   },
 };
 
